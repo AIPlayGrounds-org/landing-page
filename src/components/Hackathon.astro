@@ -1,0 +1,74 @@
+---
+import type { Translations } from '../i18n';
+
+interface Props { t: Translations; }
+const { t } = Astro.props;
+
+const judges = [
+  { name: "Adrian Mastronardi", role: "CTO of Habi", country: "Colombia" },
+  { name: "Martin Pelaez", role: "CTO of Plenty", country: "Colombia" },
+  { name: "Piero Sifuentes", role: "CTO of Hapi", country: "Peru" },
+  { name: "Sebastian Ruiz", role: "Program Lead at UTEC Ventures", country: "Peru" },
+  { name: "Gonzalo Aller", role: "Business Incubator Manager", country: "Peru" },
+];
+
+const sponsors = [
+  "UPCH", "Bioincuba", "Yavendió!", "ElevenLabs", "Human", "Cursor",
+  "Lovable", "V0", "Repensar", "Valtec", "Nutriera", "Leasy",
+  "Finity", "CloudforgeAI", "Huawei", "Clerk", "Little Caesars"
+];
+---
+
+<section id="events" class="py-20 lg:py-32 bg-bg-secondary relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-block text-brand-yellow text-sm font-semibold uppercase tracking-wider mb-4">{t.hackathon.label}</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-4">{t.hackathon.title}</h2>
+      <p class="text-xl text-brand-blue font-semibold mb-4">{t.hackathon.subtitle}</p>
+      <p class="text-text-muted text-lg max-w-2xl mx-auto">{t.hackathon.desc}</p>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-16 reveal-stagger reveal">
+      {t.hackathon.stats.map((stat) => (
+        <div class="bg-bg-tertiary border border-border-primary rounded-xl p-6 text-center">
+          <div class="text-3xl font-extrabold text-brand-blue">{stat.value}</div>
+          <p class="text-text-muted text-sm mt-1">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mb-16 reveal">
+      <h3 class="text-2xl font-bold text-text-primary text-center mb-8">{t.hackathon.judgesTitle}</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {judges.map((judge) => (
+          <div class="bg-bg-tertiary border border-border-primary rounded-xl p-5 text-center hover:border-brand-blue/30 transition-all duration-300">
+            <div class="w-16 h-16 rounded-full bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center mx-auto mb-3">
+              <span class="text-2xl text-brand-blue font-bold">{judge.name[0]}</span>
+            </div>
+            <h4 class="text-text-primary font-semibold text-sm">{judge.name}</h4>
+            <p class="text-text-muted text-xs mt-1">{judge.role}</p>
+            <span class="inline-block mt-2 text-xs bg-brand-yellow/10 text-brand-yellow px-2 py-0.5 rounded">{judge.country}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="reveal">
+      <h3 class="text-lg font-semibold text-text-muted text-center mb-6 uppercase tracking-wider">{t.hackathon.sponsorsTitle}</h3>
+      <div class="flex flex-wrap justify-center gap-3">
+        {sponsors.map((sponsor) => (
+          <span class="px-4 py-2 bg-bg-tertiary border border-border-primary rounded-lg text-text-subtle text-sm hover:text-brand-blue hover:border-brand-blue/30 transition-all duration-300">
+            {sponsor}
+          </span>
+        ))}
+      </div>
+    </div>
+
+    <!-- CTA to hackathon page -->
+    <div class="text-center mt-12 reveal">
+      <a href={t.hackathon.ctaUrl} target="_blank" rel="noopener noreferrer" class="inline-block gradient-cta text-text-on-brand px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transition-transform duration-300 glow-blue">
+        {t.hackathon.cta} →
+      </a>
+    </div>
+  </div>
+</section>

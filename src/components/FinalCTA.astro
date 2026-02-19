@@ -1,0 +1,43 @@
+---
+import type { Translations } from '../i18n';
+
+interface Props { t: Translations; }
+const { t } = Astro.props;
+---
+
+<section id="waitlist" class="py-20 lg:py-32 relative overflow-hidden">
+  <div class="absolute inset-0 gradient-hero"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] gradient-glow-blue rounded-full blur-3xl opacity-20"></div>
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-text-primary mb-6">
+      {t.finalCta.title1}<br />{t.finalCta.title2}
+    </h2>
+    <p class="text-lg text-text-muted max-w-2xl mx-auto mb-10">
+      {t.finalCta.subtitle}
+    </p>
+
+    <div class="max-w-md mx-auto mb-8">
+      <div class="flex flex-col sm:flex-row gap-3">
+        <input
+          type="email"
+          placeholder={t.finalCta.placeholder}
+          class="flex-1 px-5 py-4 bg-bg-tertiary border border-border-primary rounded-lg text-text-primary placeholder:text-text-subtle focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/50 transition-all"
+        />
+        <button class="gradient-cta text-text-on-brand px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transition-transform duration-300 animate-pulse-glow whitespace-nowrap cursor-pointer">
+          {t.finalCta.button}
+        </button>
+      </div>
+      <p class="text-text-subtle text-xs mt-3">{t.finalCta.spam}</p>
+    </div>
+
+    <div class="pt-8 border-t border-border-primary">
+      <p class="text-text-muted mb-4">
+        <strong class="text-text-primary">{t.finalCta.partnerStrong}</strong> {t.finalCta.partnerText}
+      </p>
+      <a href="mailto:contact@aiplaygrounds.com" class="inline-block border-2 border-brand-yellow text-brand-yellow px-6 py-3 rounded-lg font-semibold hover:bg-brand-yellow/10 transition-all duration-300">
+        {t.finalCta.partnerCta}
+      </a>
+    </div>
+  </div>
+</section>
