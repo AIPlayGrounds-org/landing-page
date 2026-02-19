@@ -1,0 +1,101 @@
+---
+import type { Translations } from '../i18n';
+
+interface Props { t: Translations; }
+const { t } = Astro.props;
+
+const navItems = [
+  { label: t.nav.program, href: "#program" },
+  { label: t.nav.events, href: "#events" },
+  { label: t.nav.community, href: "#community" },
+  { label: t.nav.trajectory, href: "#trajectory" },
+];
+---
+
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 lg:h-20">
+    <a href={t.lang === 'es' ? '/es/' : '/'} class="flex items-center gap-2 text-text-primary font-bold text-xl">
+      <span class="text-brand-blue">AI</span>
+      <span>PlayGrounds</span>
+    </a>
+
+    <div class="hidden lg:flex items-center gap-8">
+      {navItems.map((item) => (
+        <a href={item.href} class="text-text-muted hover:text-brand-blue transition-colors duration-300 text-sm font-medium link-underline">
+          {item.label}
+        </a>
+      ))}
+      <a href={t.langToggle.href} class="text-text-muted hover:text-text-primary text-sm font-medium transition-colors">
+        {t.langToggle.label}
+      </a>
+      <a href="#waitlist" class="gradient-cta text-text-on-brand px-5 py-2.5 rounded-lg font-semibold text-sm hover:scale-105 transition-transform duration-300 glow-blue">
+        {t.nav.cta}
+      </a>
+    </div>
+
+    <button id="menu-toggle" class="lg:hidden flex flex-col gap-1.5 p-2 cursor-pointer" aria-label="Toggle menu">
+      <span class="block w-6 h-0.5 bg-text-primary transition-all duration-300 origin-center" id="bar1"></span>
+      <span class="block w-6 h-0.5 bg-text-primary transition-all duration-300" id="bar2"></span>
+      <span class="block w-6 h-0.5 bg-text-primary transition-all duration-300 origin-center" id="bar3"></span>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" class="lg:hidden hidden bg-bg-primary/95 backdrop-blur-lg border-t border-border-primary">
+    <div class="px-4 py-6 flex flex-col gap-4">
+      {navItems.map((item) => (
+        <a href={item.href} class="text-text-muted hover:text-brand-blue transition-colors duration-300 text-base font-medium py-2 mobile-nav-link">
+          {item.label}
+        </a>
+      ))}
+      <a href={t.langToggle.href} class="text-text-muted hover:text-text-primary text-base font-medium py-2">
+        {t.langToggle.label}
+      </a>
+      <hr class="border-border-primary" />
+      <a href="#waitlist" class="gradient-cta text-text-on-brand px-5 py-3 rounded-lg font-semibold text-center text-sm">
+        {t.nav.cta}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const bar1 = document.getElementById('bar1');
+  const bar2 = document.getElementById('bar2');
+  const bar3 = document.getElementById('bar3');
+  let menuOpen = false;
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      navbar?.classList.add('header-scrolled');
+    } else {
+      navbar?.classList.remove('header-scrolled');
+    }
+  });
+
+  menuToggle?.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu?.classList.toggle('hidden');
+    if (menuOpen) {
+      bar1!.style.transform = 'rotate(45deg) translateY(4px)';
+      bar2!.style.opacity = '0';
+      bar3!.style.transform = 'rotate(-45deg) translateY(-4px)';
+    } else {
+      bar1!.style.transform = '';
+      bar2!.style.opacity = '1';
+      bar3!.style.transform = '';
+    }
+  });
+
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+      menuOpen = false;
+      bar1!.style.transform = '';
+      bar2!.style.opacity = '1';
+      bar3!.style.transform = '';
+    });
+  });
+</script>

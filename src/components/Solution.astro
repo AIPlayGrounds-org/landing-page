@@ -1,0 +1,78 @@
+---
+import type { Translations } from '../i18n';
+
+interface Props { t: Translations; }
+const { t } = Astro.props;
+---
+
+<section id="program" class="py-20 lg:py-32 bg-bg-primary relative">
+  <div class="absolute top-1/2 left-0 w-72 h-72 gradient-glow-blue rounded-full blur-3xl opacity-30"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-block text-brand-blue text-sm font-semibold uppercase tracking-wider mb-4">{t.solution.label}</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-6">{t.solution.title}</h2>
+      <p class="text-xl sm:text-2xl text-brand-yellow font-semibold italic max-w-3xl mx-auto">
+        {t.solution.quote}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 reveal-stagger reveal">
+      {t.solution.pillars.map((pillar) => (
+        <div class="bg-bg-tertiary border border-border-primary rounded-xl p-8 text-center hover:border-brand-blue/40 hover:shadow-[0_0_20px_rgba(96,165,250,0.15)] transition-all duration-300 group">
+          <div class="text-4xl mb-4">{pillar.icon}</div>
+          <h3 class="text-text-primary font-bold text-xl mb-3">{pillar.title}</h3>
+          <p class="text-text-muted">{pillar.desc}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+      <div class="reveal">
+        <h3 class="text-2xl font-bold text-text-primary mb-8">{t.solution.milestonesTitle}</h3>
+        <div class="space-y-6">
+          {t.solution.milestones.map((m) => (
+            <div class="flex items-start gap-4 group">
+              <span class="flex-shrink-0 w-12 h-12 rounded-lg bg-brand-blue/10 border border-brand-blue/20 flex items-center justify-center text-brand-blue font-bold text-sm">
+                {m.num}
+              </span>
+              <div>
+                <h4 class="text-text-primary font-semibold mb-1">{m.title}</h4>
+                <p class="text-text-muted text-sm">{m.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="reveal">
+        <h3 class="text-2xl font-bold text-text-primary mb-8">{t.solution.validationTitle}</h3>
+        <div class="space-y-4">
+          {t.solution.validations.map((q) => (
+            <div class="flex items-start gap-3 bg-bg-tertiary border border-border-primary rounded-lg p-4 hover:border-brand-blue/30 transition-all duration-300">
+              <span class="flex-shrink-0 text-brand-blue mt-0.5">✓</span>
+              <p class="text-text-secondary">{q}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-bg-tertiary border border-border-primary rounded-xl p-8 lg:p-12 reveal">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        {t.solution.structureStats.map((s) => (
+          <div>
+            <div class="text-3xl font-bold text-brand-blue mb-1">{s.value}</div>
+            <p class="text-text-muted text-sm">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="text-center mt-12 reveal">
+      <a href="#waitlist" class="inline-block gradient-cta text-text-on-brand px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transition-transform duration-300 glow-blue">
+        {t.solution.cta}
+      </a>
+    </div>
+  </div>
+</section>

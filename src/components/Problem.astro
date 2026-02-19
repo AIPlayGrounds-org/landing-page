@@ -1,0 +1,54 @@
+---
+import type { Translations } from '../i18n';
+
+interface Props { t: Translations; }
+const { t } = Astro.props;
+---
+
+<section id="problem" class="py-20 lg:py-32 bg-bg-secondary relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 reveal">
+      <span class="inline-block text-brand-yellow text-sm font-semibold uppercase tracking-wider mb-4">{t.problem.label}</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary mb-6">
+        {t.problem.title1}<br />{t.problem.title2}
+      </h2>
+      <p class="text-text-muted text-lg max-w-2xl mx-auto" set:html={t.problem.subtitle} />
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16 reveal-stagger reveal">
+      {t.problem.steps.map((step, i) => (
+        <div class="relative bg-bg-tertiary border border-border-primary rounded-xl p-6 hover:border-error/40 transition-all duration-300 group">
+          <div class="flex items-start gap-4">
+            <span class={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${i < 3 ? 'bg-brand-blue/20 text-brand-blue' : 'bg-error/20 text-error'}`}>
+              {step.num}
+            </span>
+            <div>
+              <h3 class="text-text-primary font-semibold mb-1">{step.title}</h3>
+              <p class="text-text-muted text-sm">{step.desc}</p>
+            </div>
+          </div>
+          {i < 5 && (
+            <div class="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 text-text-subtle text-xl z-10">→</div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div class="text-center mb-16 reveal">
+      <blockquote class="text-xl sm:text-2xl font-semibold text-text-primary italic max-w-3xl mx-auto border-l-4 border-brand-blue pl-6 text-left">
+        {t.problem.quote}
+      </blockquote>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 reveal-stagger reveal">
+      {t.problem.stats.map((stat) => (
+        <div class="bg-bg-tertiary border border-border-primary rounded-xl p-8 text-center hover:border-error/40 transition-all duration-300">
+          <div class="text-4xl lg:text-5xl font-extrabold text-error mb-2">
+            <span class="counter" data-target={stat.value}>0</span>{stat.suffix}
+          </div>
+          <p class="text-text-muted">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,84 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Hero from '../../components/Hero.astro';
+import Problem from '../../components/Problem.astro';
+import Solution from '../../components/Solution.astro';
+import Umbral from '../../components/Umbral.astro';
+import Trajectory from '../../components/Trajectory.astro';
+import Hackathon from '../../components/Hackathon.astro';
+import Coming2026 from '../../components/Coming2026.astro';
+import Community from '../../components/Community.astro';
+import FAQ from '../../components/FAQ.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import Footer from '../../components/Footer.astro';
+import { getTranslations } from '../../i18n';
+
+const t = getTranslations('es');
+---
+
+<Layout title="AI PlayGrounds — Entiende la IA. Construye el Futuro." description="Democratizando el conocimiento práctico de IA en Latinoamérica. Construye productos de IA reales, despliégalos y entiende lo que construyes." lang="es">
+  <Navbar t={t} />
+  <main>
+    <Hero t={t} />
+    <Problem t={t} />
+    <Solution t={t} />
+    <Umbral t={t} />
+    <Trajectory t={t} />
+    <Hackathon t={t} />
+    <Coming2026 t={t} />
+    <Community t={t} />
+    <FAQ t={t} />
+    <FinalCTA t={t} />
+  </main>
+  <Footer t={t} />
+
+  <script>
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => {
+      revealObserver.observe(el);
+    });
+
+    const counterObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const target = parseInt(el.dataset.target || '0', 10);
+            let current = 0;
+            const increment = Math.ceil(target / 60);
+            const duration = 1500;
+            const stepTime = duration / (target / increment);
+
+            const timer = setInterval(() => {
+              current += increment;
+              if (current >= target) {
+                current = target;
+                clearInterval(timer);
+              }
+              el.textContent = current.toLocaleString();
+            }, stepTime);
+
+            counterObserver.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    document.querySelectorAll('.counter').forEach((el) => {
+      counterObserver.observe(el);
+    });
+  </script>
+</Layout>
