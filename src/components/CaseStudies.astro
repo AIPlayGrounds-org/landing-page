@@ -1,0 +1,163 @@
+---
+/**
+ * CaseStudies.astro - Casos de éxito / Proyectos desplegados
+ *
+ * Características:
+ * - Grid de proyectos reales construidos por participantes
+ * - Cards con screenshot, nombre, problema, tecnologías, métricas
+ * - Hover para ver más detalles
+ * - Link a Umbral como plataforma de proyectos
+ */
+
+// Datos de proyectos (placeholders editables)
+const projects = [
+  {
+    name: 'AsistenteDoc',
+    problem: 'Simplifica la gestión de documentos médicos con IA',
+    technologies: ['Claude API', 'Python', 'FastAPI'],
+    impact: '120 usuarios activos',
+    participant: {
+      name: 'María González',
+      role: 'AI Technical Product',
+      avatar: '/images/avatars/placeholder-1.jpg',
+    },
+    image: '/images/projects/placeholder-1.jpg',
+  },
+  {
+    name: 'FinanzasAI',
+    problem: 'Análisis financiero automatizado para PyMEs',
+    technologies: ['GPT-4', 'React', 'Node.js'],
+    impact: '50 empresas usando la herramienta',
+    participant: {
+      name: 'Carlos Mendoza',
+      role: 'AI Technical Product',
+      avatar: '/images/avatars/placeholder-2.jpg',
+    },
+    image: '/images/projects/placeholder-2.jpg',
+  },
+  {
+    name: 'EduBot',
+    problem: 'Tutor virtual para estudiantes de secundaria',
+    technologies: ['LangChain', 'Astro', 'Supabase'],
+    impact: '200+ estudiantes',
+    participant: {
+      name: 'Ana Rojas',
+      role: 'AI Fundamentals',
+      avatar: '/images/avatars/placeholder-3.jpg',
+    },
+    image: '/images/projects/placeholder-3.jpg',
+  },
+  {
+    name: 'AgriSense',
+    problem: 'Monitoreo de cultivos con visión por computadora',
+    technologies: ['Computer Vision', 'Python', 'AWS'],
+    impact: '15 agricultores piloto',
+    participant: {
+      name: 'Roberto Silva',
+      role: 'AI Technical Product',
+      avatar: '/images/avatars/placeholder-4.jpg',
+    },
+    image: '/images/projects/placeholder-4.jpg',
+  },
+];
+---
+
+<section id="casos" class="py-16 sm:py-20 lg:py-24 bg-bg-primary">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header de sección -->
+    <div class="text-center mb-12 lg:mb-16 reveal">
+      <h2 class="section-title">Lo que nuestros participantes construyen</h2>
+      <div class="section-divider mx-auto"></div>
+      <p class="section-subtitle mx-auto">
+        Proyectos reales, desplegados y validados con usuarios — no solo prototipos.
+      </p>
+    </div>
+
+    <!-- Grid de proyectos -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 reveal-stagger">
+      {projects.map((project) => (
+        <div class="card overflow-hidden group">
+          <!-- Imagen del proyecto -->
+          <div class="relative h-48 sm:h-56 bg-bg-elevated overflow-hidden">
+            <!-- Placeholder visual para screenshot -->
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-electric-indigo/20 to-neon-cyan/20">
+              <div class="text-center">
+                <div class="w-16 h-16 mx-auto mb-2 rounded-xl bg-bg-elevated border border-border-subtle flex items-center justify-center">
+                  <svg class="w-8 h-8 text-electric-indigo" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <span class="text-text-muted text-xs">Screenshot del proyecto</span>
+              </div>
+            </div>
+
+            <!-- Overlay en hover -->
+            <div class="absolute inset-0 bg-electric-indigo/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <a href="#" class="btn-secondary text-sm">
+                Ver proyecto
+              </a>
+            </div>
+          </div>
+
+          <!-- Contenido -->
+          <div class="p-6">
+            <!-- Nombre del proyecto -->
+            <h3 class="text-lg sm:text-xl font-bold font-display text-text-primary mb-2">
+              {project.name}
+            </h3>
+
+            <!-- Problema que resuelve -->
+            <p class="text-text-secondary text-sm mb-4">
+              {project.problem}
+            </p>
+
+            <!-- Tecnologías -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.technologies.map((tech) => (
+                <span class="px-2 py-1 text-xs bg-bg-elevated border border-border-subtle rounded text-text-muted">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <!-- Métrica de impacto -->
+            <div class="flex items-center gap-2 mb-4 text-neon-cyan">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              <span class="text-sm font-medium">{project.impact}</span>
+            </div>
+
+            <!-- Participante -->
+            <div class="flex items-center gap-3 pt-4 border-t border-border-subtle">
+              <!-- Avatar placeholder -->
+              <div class="w-10 h-10 rounded-full bg-bg-elevated border border-border-subtle flex items-center justify-center">
+                <span class="text-text-muted text-sm font-medium">
+                  {project.participant.name.split(' ').map(n => n[0]).join('')}
+                </span>
+              </div>
+              <div>
+                <p class="text-text-primary text-sm font-medium">{project.participant.name}</p>
+                <p class="text-text-muted text-xs">{project.participant.role}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Link a Umbral -->
+    <div class="mt-12 text-center reveal">
+      <p class="text-text-secondary mb-4">
+        Todos los proyectos están desplegados en nuestra plataforma
+      </p>
+      <a href="#" class="link-indigo inline-flex items-center gap-2 text-lg">
+        Ver más proyectos en Umbral
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

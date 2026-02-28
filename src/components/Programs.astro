@@ -1,0 +1,141 @@
+---
+/**
+ * Programs.astro - Programas educativos de AI PlayGrounds
+ *
+ * Características:
+ * - 3 cards con glassmorphism
+ * - Badges de estado (GRATIS, NUEVO, PREMIUM)
+ * - Información de duración y nivel
+ * - CTAs específicos por programa
+ */
+
+// Datos de los programas
+const programs = [
+  {
+    name: 'AI Fundamentals',
+    tag: 'GRATIS',
+    tagStyle: 'badge-cyan',
+    subtitle: 'Tu puerta de entrada',
+    duration: '6 semanas',
+    level: 'Principiante',
+    price: null,
+    description: 'Onboarding completo al mundo de la IA. Desde machine learning hasta IA generativa. Comprende antes de construir.',
+    cta: 'Inscríbete gratis',
+    ctaStyle: 'btn-secondary',
+  },
+  {
+    name: 'AI Technical Product',
+    tag: 'NUEVO',
+    tagStyle: 'badge-indigo',
+    subtitle: 'Construye productos reales',
+    duration: '12 semanas',
+    level: 'Intermedio',
+    price: 'Pricing mixto (becas disponibles)',
+    description: 'Desarrollo avanzado de productos con IA. Diseño, arquitectura, desarrollo, iteración y despliegue con usuarios reales.',
+    cta: 'Conoce más',
+    ctaStyle: 'btn-primary',
+    featured: true,
+  },
+  {
+    name: 'The Real AI',
+    tag: 'PREMIUM',
+    tagStyle: 'badge-coral',
+    subtitle: 'Monetiza tu conocimiento',
+    duration: '8 semanas',
+    level: 'Avanzado',
+    price: null,
+    description: 'El programa para quienes ya comprenden IA y quieren convertir su conocimiento en ingresos reales.',
+    cta: 'Aplica ahora',
+    ctaStyle: 'btn-coral',
+  },
+];
+---
+
+<section id="programas" class="py-16 sm:py-20 lg:py-24 bg-bg-primary">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header de sección -->
+    <div class="text-center mb-12 lg:mb-16 reveal">
+      <h2 class="section-title">Nuestros Programas</h2>
+      <div class="section-divider mx-auto"></div>
+      <p class="section-subtitle mx-auto">
+        Elige tu camino según tu nivel de experiencia
+      </p>
+    </div>
+
+    <!-- Grid de programas -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 reveal-stagger">
+      {programs.map((program) => (
+        <div
+          class={`card-glass p-6 sm:p-8 flex flex-col relative ${program.featured ? 'lg:scale-105 lg:-translate-y-2 border-electric-indigo' : ''}`}
+        >
+          <!-- Badge -->
+          <div class="absolute top-4 right-4">
+            <span class={`badge ${program.tagStyle}`}>
+              {program.tag}
+            </span>
+          </div>
+
+          <!-- Contenido -->
+          <div class="flex-grow">
+            <!-- Nombre del programa -->
+            <h3 class="text-xl sm:text-2xl font-bold font-display text-text-primary mb-2">
+              {program.name}
+            </h3>
+
+            <!-- Subtítulo -->
+            <p class="text-electric-indigo font-medium mb-4">
+              {program.subtitle}
+            </p>
+
+            <!-- Meta info -->
+            <div class="flex flex-wrap gap-4 mb-4 text-sm">
+              <div class="flex items-center gap-2 text-text-muted">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>{program.duration}</span>
+              </div>
+              <div class="flex items-center gap-2 text-text-muted">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <span>{program.level}</span>
+              </div>
+            </div>
+
+            <!-- Precio (si aplica) -->
+            {program.price && (
+              <p class="text-text-muted text-sm mb-4 italic">
+                {program.price}
+              </p>
+            )}
+
+            <!-- Descripción -->
+            <p class="text-text-secondary leading-relaxed mb-6">
+              {program.description}
+            </p>
+          </div>
+
+          <!-- CTA -->
+          <a
+            href="#"
+            class={`${program.ctaStyle} text-center inline-flex items-center justify-center gap-2`}
+          >
+            {program.cta}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <!-- Filosofía -->
+    <div class="mt-12 text-center reveal">
+      <blockquote class="text-xl sm:text-2xl font-display italic text-text-secondary max-w-3xl mx-auto">
+        "Si no puedes explicarlo, no lo construiste — <span class="text-electric-indigo">solo lo generaste.</span>"
+      </blockquote>
+    </div>
+  </div>
+</section>

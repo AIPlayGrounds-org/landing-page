@@ -1,80 +1,234 @@
 ---
-import type { Translations } from '../i18n';
+/**
+ * Hero.astro - Sección hero de AI PlayGrounds
+ *
+ * Características:
+ * - Texto rotativo animado cada 3 segundos
+ * - Fondo con partículas (tsParticles) lazy-loaded
+ * - 2 CTAs: primario (Electric Indigo) y secundario (Neon Cyan outline)
+ * - Ocupa 100vh (pantalla completa)
+ */
 
-interface Props { t: Translations; }
-const { t } = Astro.props;
-
-const partners = [
-  "Looper.ai", "SpinOut", "Globant", "LetyMind",
-  "The Hackathon Company", "Pymut", "UPCH", "Bioincuba", "UTEC Ventures"
+// Textos que rotan en el headline
+const rotatingTexts = [
+  'Comprende IA.',
+  'Construye con IA.',
+  'Lidera con IA.',
 ];
 ---
 
-<section id="hero" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
-  <div class="absolute top-0 left-1/4 w-96 h-96 gradient-glow-blue rounded-full blur-3xl opacity-50"></div>
-  <div class="absolute bottom-1/4 right-1/4 w-80 h-80 gradient-glow-yellow rounded-full blur-3xl opacity-40"></div>
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 relative z-10">
-    <div class="text-center max-w-4xl mx-auto">
-      <div class="inline-flex items-center gap-2 bg-bg-tertiary border border-border-primary rounded-full px-4 py-2 mb-8 animate-fade-in-up">
-        <span class="text-brand-blue text-sm">🚀</span>
-        <span class="text-text-muted text-sm font-medium">{t.hero.badge}</span>
-      </div>
+  <!-- Contenedor de partículas (se inicializa con JS) -->
+  <div id="tsparticles" class="absolute inset-0 z-0"></div>
 
-      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-text-primary leading-tight tracking-tight mb-6 animate-fade-in-up" style="animation-delay: 100ms;">
-        {t.hero.headline1}<br />
-        <span class="bg-gradient-to-r from-brand-blue to-brand-yellow bg-clip-text text-transparent">
-          {t.hero.headline2}
+  <!-- Fallback gradient background (visible hasta que carguen las partículas) -->
+  <div class="absolute inset-0 z-0">
+    <!-- Gradientes decorativos -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-electric-indigo/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-neon-cyan/10 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-electric-indigo/5 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+    <!-- Texto rotativo -->
+    <div class="mb-6">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold font-display text-text-primary leading-tight">
+        <span id="rotating-text" class="inline-block min-w-[280px] sm:min-w-[400px]">
+          {rotatingTexts[0]}
         </span>
       </h1>
-
-      <p class="text-lg sm:text-xl text-text-muted max-w-2xl mx-auto mb-10 animate-fade-in-up" style="animation-delay: 200ms;">
-        {t.hero.subheadline} <strong class="text-text-primary">{t.hero.subheadlineStrong}</strong>.
-      </p>
-
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in-up" style="animation-delay: 300ms;">
-        <a href="#waitlist" class="gradient-cta text-text-on-brand px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transition-transform duration-300 animate-pulse-glow w-full sm:w-auto text-center">
-          {t.hero.ctaPrimary}
-        </a>
-        <a href="#program" class="border-2 border-brand-yellow text-brand-yellow px-8 py-4 rounded-lg font-semibold text-lg hover:bg-brand-yellow/10 transition-all duration-300 w-full sm:w-auto text-center">
-          {t.hero.ctaSecondary}
-        </a>
-      </div>
-
-      <!-- Code mockup -->
-      <div class="relative max-w-2xl mx-auto mb-16 animate-fade-in-up" style="animation-delay: 400ms;">
-        <div class="bg-bg-tertiary border border-border-primary rounded-xl p-6 text-left font-mono text-sm">
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-3 h-3 rounded-full bg-error"></div>
-            <div class="w-3 h-3 rounded-full bg-brand-yellow"></div>
-            <div class="w-3 h-3 rounded-full bg-success"></div>
-            <span class="ml-2 text-text-subtle text-xs">ai-techproducts.py</span>
-          </div>
-          <code class="text-text-muted leading-relaxed block">
-            <span class="text-brand-blue">def</span> <span class="text-brand-yellow">build_with_understanding</span>(project):<br />
-            &nbsp;&nbsp;<span class="text-text-subtle">{t.hero.codeComment1}</span><br />
-            &nbsp;&nbsp;solution = <span class="text-brand-blue">ai.generate</span>(project)<br />
-            &nbsp;&nbsp;<span class="text-text-subtle">{t.hero.codeComment2}</span><br />
-            &nbsp;&nbsp;<span class="text-brand-blue">assert</span> can_explain(solution) <span class="text-text-subtle">{t.hero.codeComment3}</span><br />
-            &nbsp;&nbsp;<span class="text-brand-blue">assert</span> can_debug(solution)<br />
-            &nbsp;&nbsp;<span class="text-brand-blue">assert</span> can_modify(solution)<br />
-            &nbsp;&nbsp;<span class="text-brand-blue">return</span> <span class="text-success">deploy</span>(solution, users=<span class="text-brand-yellow">real_users</span>)
-          </code>
-        </div>
-      </div>
     </div>
 
-    <div class="relative overflow-hidden py-8 border-t border-border-primary">
-      <p class="text-center text-text-subtle text-sm mb-6 font-medium uppercase tracking-wider">{t.hero.partnersLabel}</p>
-      <div class="overflow-hidden">
-        <div class="marquee-track">
-          {[...partners, ...partners].map((name) => (
-            <div class="flex-shrink-0 mx-8 px-6 py-3 bg-bg-tertiary border border-border-primary rounded-lg text-text-muted text-sm font-medium hover:text-brand-blue hover:border-brand-blue/30 transition-all duration-300">
-              {name}
-            </div>
-          ))}
-        </div>
-      </div>
+    <!-- Subtítulo fijo -->
+    <p class="text-lg sm:text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-10 leading-relaxed">
+      La comunidad de educación en inteligencia artificial más grande de <span class="text-neon-cyan">Latinoamérica</span>
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+      <!-- CTA Principal -->
+      <a
+        href="#programas"
+        class="btn-primary text-lg px-8 py-4 w-full sm:w-auto"
+      >
+        Empieza gratis
+      </a>
+
+      <!-- CTA Secundario -->
+      <a
+        href="#eventos"
+        class="btn-secondary text-lg px-8 py-4 w-full sm:w-auto"
+      >
+        Ver Hack@LATAM 2026
+      </a>
+    </div>
+
+    <!-- Indicador de scroll -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
     </div>
   </div>
 </section>
+
+<!-- Estilos específicos del Hero -->
+<style>
+  /* Animación de fade para el texto rotativo */
+  @keyframes text-fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes text-fade-out {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+  }
+
+  .text-entering {
+    animation: text-fade-in 0.5s ease forwards;
+  }
+
+  .text-exiting {
+    animation: text-fade-out 0.5s ease forwards;
+  }
+
+  /* Estilo para partículas cargadas */
+  #tsparticles canvas {
+    position: absolute !important;
+  }
+</style>
+
+<!-- Script para texto rotativo y partículas -->
+<script>
+  // ═══════════════════════════════════════════════════════════
+  // TEXTO ROTATIVO
+  // ═══════════════════════════════════════════════════════════
+  const rotatingTexts = [
+    'Comprende IA.',
+    'Construye con IA.',
+    'Lidera con IA.',
+  ];
+
+  let currentIndex = 0;
+  const textElement = document.getElementById('rotating-text');
+
+  function rotateText() {
+    if (!textElement) return;
+
+    // Fade out
+    textElement.classList.remove('text-entering');
+    textElement.classList.add('text-exiting');
+
+    setTimeout(() => {
+      // Cambiar texto
+      currentIndex = (currentIndex + 1) % rotatingTexts.length;
+      textElement.textContent = rotatingTexts[currentIndex];
+
+      // Fade in
+      textElement.classList.remove('text-exiting');
+      textElement.classList.add('text-entering');
+    }, 500);
+  }
+
+  // Iniciar rotación cada 3 segundos
+  setInterval(rotateText, 3000);
+
+  // ═══════════════════════════════════════════════════════════
+  // TSPARTICLES - Lazy loaded
+  // ═══════════════════════════════════════════════════════════
+  async function initParticles() {
+    // Verificar si tsParticles está disponible
+    if (typeof window !== 'undefined' && 'tsParticles' in window) {
+      const { tsParticles } = window as any;
+
+      await tsParticles.load('tsparticles', {
+        fullScreen: false,
+        background: {
+          color: 'transparent',
+        },
+        fpsLimit: 60,
+        particles: {
+          number: {
+            value: 80,
+            density: {
+              enable: true,
+              area: 800,
+            },
+          },
+          color: {
+            value: ['#6366F1', '#22D3EE'], // Electric Indigo y Neon Cyan
+          },
+          shape: {
+            type: 'circle',
+          },
+          opacity: {
+            value: 0.5,
+            random: true,
+          },
+          size: {
+            value: { min: 1, max: 3 },
+          },
+          move: {
+            enable: true,
+            speed: 1,
+            direction: 'none',
+            random: true,
+            straight: false,
+            outModes: {
+              default: 'out',
+            },
+          },
+          links: {
+            enable: true,
+            distance: 150,
+            color: '#6366F1',
+            opacity: 0.2,
+            width: 1,
+          },
+        },
+        interactivity: {
+          events: {
+            onHover: {
+              enable: true,
+              mode: 'grab',
+            },
+            resize: true,
+          },
+          modes: {
+            grab: {
+              distance: 140,
+              links: {
+                opacity: 0.5,
+              },
+            },
+          },
+        },
+        detectRetina: true,
+      });
+    }
+  }
+
+  // Intentar inicializar las partículas
+  // Si tsParticles no está cargado, el fallback gradient se muestra
+  if (document.readyState === 'complete') {
+    initParticles();
+  } else {
+    window.addEventListener('load', initParticles);
+  }
+</script>

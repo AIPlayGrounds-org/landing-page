@@ -1,86 +1,76 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navbar from '../components/Navbar.astro';
-import Hero from '../components/Hero.astro';
-import Problem from '../components/Problem.astro';
-import Solution from '../components/Solution.astro';
-import Umbral from '../components/Umbral.astro';
-import Trajectory from '../components/Trajectory.astro';
-import Hackathon from '../components/Hackathon.astro';
-import Coming2026 from '../components/Coming2026.astro';
-import Community from '../components/Community.astro';
-import FAQ from '../components/FAQ.astro';
-import FinalCTA from '../components/FinalCTA.astro';
-import Footer from '../components/Footer.astro';
-import { getTranslations } from '../i18n';
+/**
+ * index.astro - Página principal de AI PlayGrounds
+ *
+ * Single-page landing con scroll continuo.
+ * Cada sección tiene su propio id para navegación interna.
+ *
+ * Estructura (12 bloques en orden):
+ * 1. Header (sticky nav)
+ * 2. Hero (propuesta de valor + partículas)
+ * 3. Métricas (impacto con counters animados)
+ * 4. Programas (3 cards educativos)
+ * 5. Casos de Éxito (proyectos desplegados)
+ * 6. Testimonios (carrusel)
+ * 7. Equipo (8 miembros)
+ * 8. Eventos (timeline + countdown)
+ * 9. Partners (28 logos marquee)
+ * 10. Advisors (2 cards)
+ * 11. CTA + FAQ (accordion)
+ * 12. Footer
+ */
 
-const t = getTranslations('en');
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Metrics from '../components/Metrics.astro';
+import Programs from '../components/Programs.astro';
+import CaseStudies from '../components/CaseStudies.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Team from '../components/Team.astro';
+import Events from '../components/Events.astro';
+import Partners from '../components/Partners.astro';
+import Advisors from '../components/Advisors.astro';
+import CtaFaq from '../components/CtaFaq.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
-  <Navbar t={t} />
+  <!-- Navegación sticky -->
+  <Header />
+
   <main>
-    <Hero t={t} />
-    <Problem t={t} />
-    <Solution t={t} />
-    <Umbral t={t} />
-    <Trajectory t={t} />
-    <Hackathon t={t} />
-    <Coming2026 t={t} />
-    <Community t={t} />
-    <FAQ t={t} />
-    <FinalCTA t={t} />
+    <!-- Hero: Propuesta de valor con texto rotativo -->
+    <Hero />
+
+    <!-- Métricas: Social proof con números animados -->
+    <Metrics />
+
+    <!-- Programas: Los 3 programas educativos -->
+    <Programs />
+
+    <!-- Casos de Éxito: Proyectos construidos por participantes -->
+    <CaseStudies />
+
+    <!-- Testimonios: Voces de la comunidad -->
+    <Testimonials />
+
+    <!-- Equipo: Las personas detrás de AI PlayGrounds -->
+    <Team />
+
+    <!-- Eventos: Timeline 2026 + Hack@LATAM countdown -->
+    <Events />
+
+    <!-- Partners: 28 logos en marquee infinito -->
+    <Partners />
+
+    <!-- Advisors: Boris y Jeslyn -->
+    <Advisors />
+
+    <!-- CTA Final + FAQ: Conversión y preguntas frecuentes -->
+    <CtaFaq />
   </main>
-  <Footer t={t} />
 
-  <script>
-    // Scroll reveal with Intersection Observer
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-
-    document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => {
-      revealObserver.observe(el);
-    });
-
-    // Animated counters
-    const counterObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const target = parseInt(el.dataset.target || '0', 10);
-            let current = 0;
-            const increment = Math.ceil(target / 60);
-            const duration = 1500;
-            const stepTime = duration / (target / increment);
-
-            const timer = setInterval(() => {
-              current += increment;
-              if (current >= target) {
-                current = target;
-                clearInterval(timer);
-              }
-              el.textContent = current.toLocaleString();
-            }, stepTime);
-
-            counterObserver.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    document.querySelectorAll('.counter').forEach((el) => {
-      counterObserver.observe(el);
-    });
-  </script>
+  <!-- Footer: Links y redes sociales -->
+  <Footer />
 </Layout>

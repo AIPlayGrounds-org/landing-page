@@ -1,0 +1,239 @@
+---
+/**
+ * Testimonials.astro - Carrusel de testimonios
+ *
+ * Características:
+ * - Carrusel horizontal con dots de navegación
+ * - 3 tipos de testimonios: participantes, speakers, sponsors
+ * - Autoplay cada 5 segundos, pausa en hover
+ * - Quotes grandes en itálica
+ */
+
+// Datos de testimonios (placeholders editables)
+const testimonials = [
+  {
+    type: 'participant',
+    quote: 'Entré sin saber qué era un LLM. Hoy tengo un producto con 50 usuarios reales que me genera ingresos.',
+    name: 'Alejandra Vargas',
+    role: 'Participante — AI Technical Product',
+    avatar: '/images/avatars/participant-1.jpg',
+  },
+  {
+    type: 'speaker',
+    quote: 'AI PlayGrounds está haciendo lo que nadie más en LATAM: formar builders, no operadores de herramientas.',
+    name: 'Fernando López',
+    role: 'CTO @ Globant',
+    company: 'Globant',
+    avatar: '/images/avatars/speaker-1.jpg',
+  },
+  {
+    type: 'participant',
+    quote: 'La metodología de explicar lo que construyes me cambió la perspectiva. Ahora realmente entiendo mi código.',
+    name: 'Diego Morales',
+    role: 'Participante — AI Fundamentals',
+    avatar: '/images/avatars/participant-2.jpg',
+  },
+  {
+    type: 'sponsor',
+    quote: 'Apoyamos a AI PlayGrounds porque creemos en democratizar el conocimiento tecnológico en la región.',
+    name: 'PNUD Perú',
+    role: 'Aliado Estratégico',
+    company: 'PNUD',
+    avatar: '/images/logos/pnud.png',
+  },
+  {
+    type: 'speaker',
+    quote: 'El nivel de los proyectos que salen de este programa es impresionante. Talento real de LATAM.',
+    name: 'Laura Chen',
+    role: 'AI Lead @ LetyMind',
+    company: 'LetyMind',
+    avatar: '/images/avatars/speaker-2.jpg',
+  },
+];
+---
+
+<section id="testimonios" class="py-16 sm:py-20 lg:py-24 bg-bg-primary relative overflow-hidden">
+  <!-- Gradiente decorativo -->
+  <div class="absolute inset-0 gradient-indigo-dark opacity-50"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+    <!-- Header de sección -->
+    <div class="text-center mb-12 lg:mb-16 reveal">
+      <h2 class="section-title">Historias de transformación</h2>
+      <div class="section-divider mx-auto"></div>
+      <p class="section-subtitle mx-auto">
+        Lo que dicen quienes ya son parte de la comunidad
+      </p>
+    </div>
+
+    <!-- Carrusel -->
+    <div class="relative reveal" id="testimonial-carousel">
+      <!-- Track del carrusel -->
+      <div class="overflow-hidden">
+        <div class="carousel-track flex" id="carousel-track">
+          {testimonials.map((testimonial, index) => (
+            <div
+              class="carousel-slide flex-shrink-0 w-full px-4"
+              data-index={index}
+            >
+              <div class="max-w-3xl mx-auto text-center">
+                <!-- Quote -->
+                <blockquote class="text-xl sm:text-2xl lg:text-3xl font-display italic text-text-primary leading-relaxed mb-8">
+                  "{testimonial.quote}"
+                </blockquote>
+
+                <!-- Avatar y datos -->
+                <div class="flex flex-col items-center">
+                  <!-- Avatar placeholder -->
+                  <div class="w-16 h-16 rounded-full bg-bg-elevated border-2 border-electric-indigo flex items-center justify-center mb-4">
+                    {testimonial.type === 'sponsor' ? (
+                      <span class="text-text-muted text-xs font-medium">{testimonial.company}</span>
+                    ) : (
+                      <span class="text-text-primary text-lg font-medium">
+                        {testimonial.name.split(' ').map(n => n[0]).join('')}
+                      </span>
+                    )}
+                  </div>
+
+                  <!-- Nombre y rol -->
+                  <p class="text-text-primary font-semibold font-display text-lg">
+                    {testimonial.name}
+                  </p>
+                  <p class="text-text-secondary text-sm">
+                    {testimonial.role}
+                  </p>
+
+                  {/* Badge del tipo */}
+                  <div class="mt-3">
+                    {testimonial.type === 'participant' && (
+                      <span class="badge badge-cyan">Participante</span>
+                    )}
+                    {testimonial.type === 'speaker' && (
+                      <span class="badge badge-indigo">Speaker</span>
+                    )}
+                    {testimonial.type === 'sponsor' && (
+                      <span class="badge badge-coral">Aliado</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Dots de navegación -->
+      <div class="flex justify-center gap-3 mt-8" id="carousel-dots">
+        {testimonials.map((_, index) => (
+          <button
+            class={`carousel-dot ${index === 0 ? 'active' : ''}`}
+            data-index={index}
+            aria-label={`Ir al testimonio ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      <!-- Controles de navegación -->
+      <button
+        id="carousel-prev"
+        class="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-bg-elevated border border-border-subtle flex items-center justify-center text-text-secondary hover:text-text-primary hover:border-electric-indigo transition-all hidden sm:flex"
+        aria-label="Anterior"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <button
+        id="carousel-next"
+        class="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-bg-elevated border border-border-subtle flex items-center justify-center text-text-secondary hover:text-text-primary hover:border-electric-indigo transition-all hidden sm:flex"
+        aria-label="Siguiente"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Script del carrusel -->
+<script define:vars={{ totalSlides: testimonials.length }}>
+  const track = document.getElementById('carousel-track');
+  const dots = document.querySelectorAll('.carousel-dot');
+  const prevBtn = document.getElementById('carousel-prev');
+  const nextBtn = document.getElementById('carousel-next');
+  const carousel = document.getElementById('testimonial-carousel');
+
+  let currentSlide = 0;
+  let autoplayInterval;
+  let isPaused = false;
+
+  function goToSlide(index) {
+    currentSlide = index;
+    if (currentSlide < 0) currentSlide = totalSlides - 1;
+    if (currentSlide >= totalSlides) currentSlide = 0;
+
+    // Mover el track
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+    // Actualizar dots
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+  }
+
+  function nextSlide() {
+    goToSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    goToSlide(currentSlide - 1);
+  }
+
+  function startAutoplay() {
+    if (!isPaused) {
+      autoplayInterval = setInterval(nextSlide, 5000);
+    }
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+
+  // Event listeners
+  prevBtn?.addEventListener('click', () => {
+    prevSlide();
+    stopAutoplay();
+    startAutoplay();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    nextSlide();
+    stopAutoplay();
+    startAutoplay();
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      goToSlide(index);
+      stopAutoplay();
+      startAutoplay();
+    });
+  });
+
+  // Pause on hover
+  carousel?.addEventListener('mouseenter', () => {
+    isPaused = true;
+    stopAutoplay();
+  });
+
+  carousel?.addEventListener('mouseleave', () => {
+    isPaused = false;
+    startAutoplay();
+  });
+
+  // Iniciar autoplay
+  startAutoplay();
+</script>

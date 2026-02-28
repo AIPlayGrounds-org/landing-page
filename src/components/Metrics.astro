@@ -1,0 +1,82 @@
+---
+/**
+ * Metrics.astro - Métricas de impacto de AI PlayGrounds
+ *
+ * Características:
+ * - 4 cards con métricas de impacto
+ * - Números animados (counter) que se activan al entrar en viewport
+ * - CTAs en cada card
+ * - Layout 4 columnas en desktop, 2x2 en tablet, 1 columna en mobile
+ */
+
+// Datos de las métricas
+const metrics = [
+  {
+    value: 300,
+    suffix: '+',
+    label: 'Participantes en bootcamps',
+    cta: 'Ver programas',
+    ctaHref: '#programas',
+  },
+  {
+    value: 40,
+    suffix: '',
+    label: 'Becas completas otorgadas',
+    cta: 'Aplica a una beca',
+    ctaHref: '#programas',
+  },
+  {
+    value: 16,
+    suffix: '',
+    label: 'Speakers internacionales',
+    cta: 'Ver eventos',
+    ctaHref: '#eventos',
+  },
+  {
+    value: 800,
+    suffix: '+',
+    label: 'Registrados en Hackathon 2025',
+    cta: 'Hack@LATAM 2026',
+    ctaHref: '#eventos',
+  },
+];
+---
+
+<section id="metricas" class="py-16 sm:py-20 lg:py-24 bg-bg-primary">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Grid de métricas -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal-stagger">
+      {metrics.map((metric) => (
+        <div class="card p-6 sm:p-8 text-center group">
+          <!-- Número animado -->
+          <div class="mb-3">
+            <span
+              class="counter text-4xl sm:text-5xl font-bold font-display text-neon-cyan"
+              data-target={metric.value}
+              data-suffix={metric.suffix}
+            >
+              0{metric.suffix}
+            </span>
+          </div>
+
+          <!-- Descripción -->
+          <p class="text-text-secondary text-sm sm:text-base mb-4 leading-relaxed">
+            {metric.label}
+          </p>
+
+          <!-- CTA -->
+          <a
+            href={metric.ctaHref}
+            class="link-indigo text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all"
+          >
+            {metric.cta}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

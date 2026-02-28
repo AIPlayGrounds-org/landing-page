@@ -1,0 +1,200 @@
+---
+/**
+ * Events.astro - Eventos y Timeline 2026
+ *
+ * Características:
+ * - Timeline horizontal con 3 eventos clave
+ * - Card destacada para Hack@LATAM con countdown
+ * - Countdown dinámico al 15 de mayo 2026
+ * - CTA a la página del hackathon
+ */
+
+// Datos del timeline
+const timelineEvents = [
+  {
+    name: 'PNUD Partnership',
+    date: '28 Marzo 2026',
+    description: 'Alianza estratégica con PNUD Perú',
+    active: false,
+  },
+  {
+    name: 'Hack@LATAM',
+    date: '15-17 Mayo 2026',
+    description: 'El hackathon de impacto social más grande de Latinoamérica',
+    active: true, // Próximo evento
+  },
+  {
+    name: 'IRF Fellowship',
+    date: 'Agosto-Septiembre 2026',
+    description: 'Programa de fellowship regional',
+    active: false,
+  },
+];
+
+// Fecha objetivo para el countdown (15 de mayo 2026, 00:00:00)
+const targetDate = new Date('2026-05-15T00:00:00');
+---
+
+<section id="eventos" class="py-16 sm:py-20 lg:py-24 bg-bg-primary">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header de sección -->
+    <div class="text-center mb-12 lg:mb-16 reveal">
+      <h2 class="section-title">Eventos 2026</h2>
+      <div class="section-divider mx-auto"></div>
+      <p class="section-subtitle mx-auto">
+        Los momentos más importantes de nuestra comunidad este año
+      </p>
+    </div>
+
+    <!-- Timeline horizontal -->
+    <div class="mb-16 reveal">
+      <div class="relative">
+        <!-- Línea del timeline -->
+        <div class="hidden md:block absolute top-8 left-0 right-0 h-0.5 bg-border-subtle"></div>
+
+        <!-- Eventos del timeline -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {timelineEvents.map((event) => (
+            <div class="relative text-center">
+              <!-- Nodo del timeline -->
+              <div class={`
+                mx-auto mb-4 relative z-10
+                ${event.active
+                  ? 'w-8 h-8 timeline-node-active bg-neon-cyan'
+                  : 'w-4 h-4 timeline-node bg-neon-cyan/50'
+                }
+                rounded-full border-4 border-bg-primary
+              `}></div>
+
+              <!-- Contenido del evento -->
+              <div class={`
+                p-4 rounded-xl transition-all
+                ${event.active ? 'bg-bg-elevated border border-neon-cyan' : ''}
+              `}>
+                <p class="text-neon-cyan font-medium text-sm mb-1">{event.date}</p>
+                <h3 class={`font-display font-bold mb-2 ${event.active ? 'text-xl text-text-primary' : 'text-lg text-text-secondary'}`}>
+                  {event.name}
+                </h3>
+                <p class="text-text-muted text-sm">{event.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Card destacada: Hack@LATAM -->
+    <div class="reveal">
+      <div class="relative overflow-hidden rounded-2xl gradient-coral-indigo p-1">
+        <div class="bg-bg-primary rounded-xl p-8 sm:p-12">
+          <div class="max-w-4xl mx-auto text-center">
+
+            <!-- Badge -->
+            <div class="inline-block mb-4">
+              <span class="badge badge-coral">Próximo evento principal</span>
+            </div>
+
+            <!-- Nombre del evento -->
+            <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-text-primary mb-4">
+              Hack@LATAM 2026
+            </h3>
+
+            <!-- Tagline -->
+            <p class="text-xl text-text-secondary mb-2">
+              El hackathon de impacto social más grande de Latinoamérica
+            </p>
+
+            <!-- Fechas -->
+            <p class="text-warm-coral font-semibold text-lg mb-8">
+              15, 16 y 17 de Mayo 2026
+            </p>
+
+            <!-- Countdown -->
+            <div
+              id="countdown"
+              class="flex justify-center gap-4 sm:gap-8 mb-10"
+              data-target={targetDate.toISOString()}
+            >
+              <div class="countdown-unit">
+                <div class="countdown-number" id="countdown-days">--</div>
+                <div class="countdown-label">Días</div>
+              </div>
+              <div class="text-text-muted text-3xl font-light self-start mt-2">:</div>
+              <div class="countdown-unit">
+                <div class="countdown-number" id="countdown-hours">--</div>
+                <div class="countdown-label">Horas</div>
+              </div>
+              <div class="text-text-muted text-3xl font-light self-start mt-2">:</div>
+              <div class="countdown-unit">
+                <div class="countdown-number" id="countdown-minutes">--</div>
+                <div class="countdown-label">Min</div>
+              </div>
+              <div class="text-text-muted text-3xl font-light self-start mt-2">:</div>
+              <div class="countdown-unit">
+                <div class="countdown-number" id="countdown-seconds">--</div>
+                <div class="countdown-label">Seg</div>
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <a
+              href="https://hacklatam.aiplaygrounds.tech"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-coral text-lg inline-flex items-center gap-2"
+            >
+              Registrarme
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Script del countdown -->
+<script>
+  const countdown = document.getElementById('countdown');
+  const targetDateStr = countdown?.dataset.target;
+
+  if (targetDateStr) {
+    const targetDate = new Date(targetDateStr);
+
+    const daysEl = document.getElementById('countdown-days');
+    const hoursEl = document.getElementById('countdown-hours');
+    const minutesEl = document.getElementById('countdown-minutes');
+    const secondsEl = document.getElementById('countdown-seconds');
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        // El evento ya pasó
+        if (daysEl) daysEl.textContent = '00';
+        if (hoursEl) hoursEl.textContent = '00';
+        if (minutesEl) minutesEl.textContent = '00';
+        if (secondsEl) secondsEl.textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
+      if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+      if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+      if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+    }
+
+    // Actualizar inmediatamente y luego cada segundo
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  }
+</script>

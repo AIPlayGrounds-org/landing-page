@@ -1,0 +1,91 @@
+---
+/**
+ * Partners.astro - Empresas que confían en AI PlayGrounds
+ *
+ * Características:
+ * - 3 filas de carrusel infinito tipo marquee (CSS, no JS)
+ * - 28 logos de partners
+ * - Fila 1 y 3 se mueven a la izquierda, Fila 2 a la derecha
+ * - Pause en hover de la sección completa
+ * - Fade masks en los laterales
+ */
+
+// Logos organizados por fila
+const row1 = [
+  'Yavendió!', 'ElevenLabs', 'Human', 'Cursor', 'Lovable',
+  'V2', 'Repensar', 'Valtec', 'Nutriera', 'Leasy'
+];
+
+const row2 = [
+  'Finity', 'CloudforgeAI', 'Jesús Vélez Santiago', 'Huawei', 'Clerk',
+  'Little Caesars', 'Amber', 'SpinOut', 'Wiie', 'Webflow Perú'
+];
+
+const row3 = [
+  'Globant', 'BCP', 'Bioincuba', 'Sur Global', 'ASEP',
+  'Looper.ai', 'PNUD', 'LetyMind'
+];
+---
+
+<section id="partners" class="py-16 sm:py-20 lg:py-24 bg-bg-primary overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Header de sección -->
+    <div class="text-center mb-12 lg:mb-16 reveal">
+      <h2 class="section-title">Empresas que confiaron en nosotros</h2>
+      <div class="section-divider mx-auto"></div>
+    </div>
+  </div>
+
+  <!-- Marquee container (full width) -->
+  <div class="partners-marquee space-y-8">
+
+    <!-- Fila 1 - Movimiento hacia la izquierda -->
+    <div class="marquee-container">
+      <div class="marquee-track marquee-track-left">
+        {/* Duplicamos los logos para el efecto infinito */}
+        {[...row1, ...row1].map((name) => (
+          <div class="flex-shrink-0 mx-6 lg:mx-8">
+            <div class="h-10 lg:h-12 px-6 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300">
+              {/* Placeholder de texto para el logo - reemplazar con <img> cuando estén los logos */}
+              <span class="text-text-secondary font-medium whitespace-nowrap">{name}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Fila 2 - Movimiento hacia la derecha -->
+    <div class="marquee-container">
+      <div class="marquee-track marquee-track-right">
+        {[...row2, ...row2].map((name) => (
+          <div class="flex-shrink-0 mx-6 lg:mx-8">
+            <div class="h-10 lg:h-12 px-6 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300">
+              <span class="text-text-secondary font-medium whitespace-nowrap">{name}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Fila 3 - Movimiento hacia la izquierda -->
+    <div class="marquee-container">
+      <div class="marquee-track marquee-track-left">
+        {[...row3, ...row3, ...row3].map((name) => (
+          <div class="flex-shrink-0 mx-6 lg:mx-8">
+            <div class="h-10 lg:h-12 px-6 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300">
+              <span class="text-text-secondary font-medium whitespace-nowrap">{name}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Pause animation on hover de toda la sección */
+  .partners-marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+</style>

@@ -1,0 +1,228 @@
+---
+/**
+ * Header.astro - Navegación principal de AI PlayGrounds
+ *
+ * Características:
+ * - Sticky header que cambia de transparente a sólido al hacer scroll
+ * - Navegación horizontal en desktop
+ * - Hamburger menu en mobile con sidebar
+ * - Toggle de idioma ES/EN (visual, preparado para i18n)
+ * - CTA "Empieza gratis"
+ */
+
+// Links de navegación
+const navLinks = [
+  { href: '#programas', label: 'Programas' },
+  { href: '#casos', label: 'Casos de Éxito' },
+  { href: '#eventos', label: 'Eventos' },
+  { href: '#equipo', label: 'Comunidad' },
+];
+---
+
+<header
+  id="main-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 header-transparent"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group">
+        <!-- Placeholder para logo SVG - reemplazar con logo real -->
+        <div class="w-10 h-10 rounded-lg bg-electric-indigo flex items-center justify-center">
+          <span class="text-white font-bold text-lg font-display">AI</span>
+        </div>
+        <span class="text-text-primary font-display font-semibold text-lg hidden sm:block group-hover:text-electric-indigo transition-colors">
+          PlayGrounds
+        </span>
+      </a>
+
+      <!-- Navegación Desktop -->
+      <nav class="hidden lg:flex items-center gap-8">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-text-secondary hover:text-text-primary transition-colors font-medium"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Acciones (derecha) -->
+      <div class="flex items-center gap-4">
+
+        <!-- Toggle de idioma (visual por ahora) -->
+        <button
+          class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full border border-border-subtle text-text-secondary hover:border-electric-indigo hover:text-electric-indigo transition-all text-sm font-medium"
+          aria-label="Cambiar idioma"
+        >
+          <span>ES</span>
+          <span class="text-text-muted">/</span>
+          <span class="text-text-muted">EN</span>
+        </button>
+
+        <!-- CTA Desktop -->
+        <a
+          href="#programas"
+          class="hidden md:inline-flex btn-primary text-sm"
+        >
+          Empieza gratis
+        </a>
+
+        <!-- Hamburger Menu Button (Mobile) -->
+        <button
+          id="mobile-menu-btn"
+          class="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+        >
+          <span class="hamburger-line w-6 h-0.5 bg-text-primary transition-all duration-300"></span>
+          <span class="hamburger-line w-6 h-0.5 bg-text-primary transition-all duration-300"></span>
+          <span class="hamburger-line w-6 h-0.5 bg-text-primary transition-all duration-300"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Sidebar -->
+  <div
+    id="mobile-menu"
+    class="mobile-menu fixed inset-y-0 right-0 w-80 max-w-full bg-bg-elevated border-l border-border-subtle z-50 lg:hidden"
+  >
+    <div class="flex flex-col h-full p-6">
+
+      <!-- Header del menú móvil -->
+      <div class="flex items-center justify-between mb-8">
+        <span class="text-text-primary font-display font-semibold text-lg">Menú</span>
+        <button
+          id="mobile-menu-close"
+          class="w-10 h-10 flex items-center justify-center text-text-secondary hover:text-text-primary"
+          aria-label="Cerrar menú"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Links de navegación móvil -->
+      <nav class="flex flex-col gap-4 flex-grow">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="mobile-nav-link text-text-secondary hover:text-text-primary text-lg font-medium py-2 border-b border-border-subtle transition-colors"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Footer del menú móvil -->
+      <div class="mt-auto pt-6 border-t border-border-subtle space-y-4">
+        <!-- Toggle de idioma móvil -->
+        <button class="flex items-center gap-2 text-text-secondary">
+          <span class="text-electric-indigo font-medium">ES</span>
+          <span>/</span>
+          <span>EN</span>
+        </button>
+
+        <!-- CTA móvil -->
+        <a
+          href="#programas"
+          class="btn-primary block text-center w-full"
+        >
+          Empieza gratis
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay para cerrar el menú móvil -->
+  <div
+    id="mobile-menu-overlay"
+    class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"
+  ></div>
+</header>
+
+<!-- Estilos específicos del header -->
+<style>
+  /* Animación del hamburger a X */
+  .menu-open .hamburger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .menu-open .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-open .hamburger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+</style>
+
+<!-- JavaScript para el comportamiento del header -->
+<script>
+  // Sticky header al hacer scroll
+  const header = document.getElementById('main-header');
+
+  function updateHeaderStyle() {
+    if (window.scrollY > 50) {
+      header?.classList.remove('header-transparent');
+      header?.classList.add('header-scrolled');
+    } else {
+      header?.classList.remove('header-scrolled');
+      header?.classList.add('header-transparent');
+    }
+  }
+
+  window.addEventListener('scroll', updateHeaderStyle);
+  updateHeaderStyle(); // Ejecutar al cargar
+
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  function openMobileMenu() {
+    mobileMenu?.classList.add('open');
+    mobileMenuOverlay?.classList.remove('opacity-0', 'pointer-events-none');
+    mobileMenuOverlay?.classList.add('opacity-100');
+    mobileMenuBtn?.classList.add('menu-open');
+    mobileMenuBtn?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMobileMenu() {
+    mobileMenu?.classList.remove('open');
+    mobileMenuOverlay?.classList.add('opacity-0', 'pointer-events-none');
+    mobileMenuOverlay?.classList.remove('opacity-100');
+    mobileMenuBtn?.classList.remove('menu-open');
+    mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  mobileMenuBtn?.addEventListener('click', () => {
+    const isOpen = mobileMenu?.classList.contains('open');
+    if (isOpen) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  });
+
+  mobileMenuClose?.addEventListener('click', closeMobileMenu);
+  mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+
+  // Cerrar menú al hacer click en un link
+  mobileNavLinks.forEach((link) => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  // Cerrar menú con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu?.classList.contains('open')) {
+      closeMobileMenu();
+    }
+  });
+</script>

@@ -1,0 +1,136 @@
+---
+/**
+ * CtaFaq.astro - CTA Final + FAQ Accordion
+ *
+ * Características:
+ * - CTA de urgencia con gradiente y partículas sutiles
+ * - FAQ con 6 preguntas en formato accordion
+ * - Animación de expand/collapse con fade-in
+ * - Íconos +/- para indicar estado
+ */
+
+// Preguntas frecuentes
+const faqs = [
+  {
+    question: '¿Necesito saber programar?',
+    answer: 'No. AI Fundamentals está diseñado para principiantes absolutos. No necesitas conocimientos previos de programación. Te enseñamos los conceptos fundamentales de IA de forma práctica y accesible. Lo importante es tu curiosidad y ganas de aprender.',
+  },
+  {
+    question: '¿Qué diferencia a AI PlayGrounds de otros bootcamps?',
+    answer: 'Nuestra filosofía: si no puedes explicarlo, no lo construiste — solo lo generaste. A diferencia de otros programas que te enseñan a usar herramientas, nosotros nos enfocamos en que entiendas los fundamentos. Construyes productos reales, los despliegas con usuarios reales, y demuestras que comprendes lo que hiciste.',
+  },
+  {
+    question: '¿Puedo participar desde fuera de Perú?',
+    answer: 'Sí. Nuestros programas son 100% online y tenemos participantes de toda Latinoamérica: México, Colombia, Argentina, Chile, Ecuador y más. La comunidad es regional y los horarios están pensados para diferentes zonas horarias.',
+  },
+  {
+    question: '¿Cómo funciona la metodología 100% autodidacta?',
+    answer: 'Creemos en aprender haciendo. No hay clases magistrales tradicionales. Recibes retos, recursos curados, y acceso a mentores cuando te atascas. Tú construyes, nosotros guiamos. El objetivo es que desarrolles la capacidad de aprender cualquier tecnología por tu cuenta.',
+  },
+  {
+    question: '¿Las becas son realmente 100% gratuitas?',
+    answer: 'Sí. Gracias a nuestros sponsors y partners (PNUD, empresas tech, y la comunidad), podemos ofrecer becas que cubren el 100% del costo de los programas. No hay letra pequeña ni compromisos ocultos. Solo pedimos que aproveches la oportunidad y aportes a la comunidad.',
+  },
+  {
+    question: '¿Qué pasa después de terminar un programa?',
+    answer: 'Te unes a nuestra comunidad permanente de builders. Tienes acceso a eventos exclusivos, oportunidades de networking, bolsa de trabajo, y puedes convertirte en mentor de futuras cohortes. AI PlayGrounds no es solo un programa — es una comunidad de por vida.',
+  },
+];
+---
+
+<section id="faq" class="py-16 sm:py-20 lg:py-24 bg-bg-primary">
+
+  <!-- CTA de urgencia -->
+  <div class="relative overflow-hidden mb-16 lg:mb-24">
+    <!-- Gradiente de fondo -->
+    <div class="absolute inset-0 gradient-indigo-dark"></div>
+
+    <!-- Partículas sutiles (decorativas) -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-electric-indigo/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-1/4 right-1/3 w-48 h-48 bg-neon-cyan/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center reveal">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold font-display text-text-primary mb-4">
+        La próxima cohorte de AI Fundamentals empieza pronto.
+      </h2>
+      <p class="text-lg sm:text-xl text-text-secondary mb-8">
+        Únete gratis y empieza tu camino en IA.
+      </p>
+      <a href="#programas" class="btn-primary text-lg px-10 py-4 inline-flex items-center gap-2">
+        Empieza gratis ahora
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- FAQ Accordion -->
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 reveal">
+      <h2 class="section-title">Preguntas Frecuentes</h2>
+      <div class="section-divider mx-auto"></div>
+    </div>
+
+    <div class="reveal" id="faq-container">
+      {faqs.map((faq, index) => (
+        <div class="faq-item" data-faq-index={index}>
+          <button
+            class="faq-trigger"
+            aria-expanded="false"
+            aria-controls={`faq-content-${index}`}
+          >
+            <span class="text-left text-text-primary font-display font-semibold text-lg pr-4">
+              {faq.question}
+            </span>
+            <span class="faq-icon flex-shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </span>
+          </button>
+          <div
+            class="faq-content"
+            id={`faq-content-${index}`}
+          >
+            <p class="text-text-secondary leading-relaxed pb-2">
+              {faq.answer}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Script del accordion -->
+<script>
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach((item) => {
+    const trigger = item.querySelector('.faq-trigger');
+
+    trigger?.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+
+      // Cerrar todos los demás
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('active');
+          otherItem.querySelector('.faq-trigger')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Toggle el actual
+      if (isActive) {
+        item.classList.remove('active');
+        trigger.setAttribute('aria-expanded', 'false');
+      } else {
+        item.classList.add('active');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
